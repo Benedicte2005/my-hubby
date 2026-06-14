@@ -1,288 +1,296 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ensemble face à la thèse - Mon Amour</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Georgia', serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Fond de secours romantique si la vidéo ne charge pas */
-            background: linear-gradient(to bottom, #2c000e, #6b001a);
-        }
+<!DOCTYPE html>  <html lang="fr">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Ensemble face à la thèse - Mon Amour</title>  
+    <style>  
+        body, html {  
+            margin: 0;  
+            padding: 0;  
+            width: 100%;  
+            height: 100%;  
+            font-family: 'Georgia', serif;  
+            overflow: hidden;  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            /* Fond de secours romantique si la vidéo ne charge pas */  
+            background: linear-gradient(to bottom, #2c000e, #6b001a);  
+        }  /* Vidéo en plein écran bien proportionnée */  
+    .video-background {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100vw;  
+        height: 100vh;  
+        z-index: -2;  
+        object-fit: contain;   
+    }  
 
-        /* Vidéo en plein écran bien proportionnée */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            object-fit: contain; 
-        }
+    /* Flou artistique en arrière-plan pour remplir tout l'écran */  
+    .video-blur-background {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100vw;  
+        height: 100vh;  
+        z-index: -3;  
+        object-fit: cover;  
+        filter: blur(25px);  
+        opacity: 0.6;  
+    }  
 
-        /* Flou artistique en arrière-plan pour remplir tout l'écran */
-        .video-blur-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -3;
-            object-fit: cover;
-            filter: blur(25px);
-            opacity: 0.6;
-        }
+    /* Voile sombre pour lire le texte facilement */  
+    .overlay {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0, 0, 0, 0.45);  
+        z-index: -1;  
+    }  
 
-        /* Voile sombre pour lire le texte facilement */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45);
-            z-index: -1;
-        }
+    /* Boîtes blanches de vos pages */  
+    .container {  
+        background: rgba(255, 255, 255, 0.92);  
+        padding: 30px;  
+        border-radius: 24px;  
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);  
+        max-width: 90%;  
+        width: 440px;  
+        text-align: center;  
+        backdrop-filter: blur(10px);  
+        z-index: 10;  
+        display: none;   
+        animation: fadeIn 0.5s ease-in-out forwards;  
+    }  
 
-        /* Boîtes blanches de vos pages */
-        .container {
-            background: rgba(255, 255, 255, 0.92);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            max-width: 90%;
-            width: 440px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            z-index: 10;
-            display: none; 
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
+    .container.active {  
+        display: block;  
+    }  
 
-        .container.active {
-            display: block;
-        }
+    @keyframes fadeIn {  
+        from { opacity: 0; transform: scale(0.95); }  
+        to { opacity: 1; transform: scale(1); }  
+    }  
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+    h1 {  
+        font-size: 1.8rem;  
+        color: #b3002d;  
+        margin: 10px 0;  
+    }  
 
-        h1 {
-            font-size: 1.8rem;
-            color: #b3002d;
-            margin: 10px 0;
-        }
+    p {  
+        font-size: 1.15rem;  
+        line-height: 1.6;  
+        color: #2b2b2b;  
+        margin: 15px 0;  
+    }  
 
-        p {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            color: #2b2b2b;
-            margin: 15px 0;
-        }
+    .love-quote {  
+        font-style: italic;  
+        color: #4a0007;  
+        border-left: 3px solid #ff3366;  
+        padding-left: 12px;  
+        margin: 15px 0;  
+        text-align: left;  
+        background: #fff0f3;  
+        padding: 10px;  
+        border-radius: 0 8px 8px 0;  
+    }  
 
-        .love-quote {
-            font-style: italic;
-            color: #4a0007;
-            border-left: 3px solid #ff3366;
-            padding-left: 12px;
-            margin: 15px 0;
-            text-align: left;
-            background: #fff0f3;
-            padding: 10px;
-            border-radius: 0 8px 8px 0;
-        }
+    .timer-display {  
+        font-size: 2.5rem;  
+        font-weight: bold;  
+        color: #ff3366;  
+        margin: 5px 0;  
+        font-family: monospace;  
+    }  
 
-        .timer-display {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ff3366;
-            margin: 5px 0;
-            font-family: monospace;
-        }
+    .btn-group {  
+        display: flex;  
+        gap: 10px;  
+        justify-content: center;  
+        flex-wrap: wrap;  
+        margin-top: 20px;  
+    }  
 
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+    button {  
+        padding: 12px 20px;  
+        font-size: 0.9rem;  
+        border-radius: 25px;  
+        border: none;  
+        cursor: pointer;  
+        font-weight: bold;  
+        transition: all 0.2s;  
+    }  
 
-        button {
-            padding: 12px 20px;
-            font-size: 0.9rem;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
+    button:hover {  
+        transform: scale(1.05);  
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);  
+    }  
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+    .btn-next { background-color: #e60039; color: white; }  
+    .btn-sec { background-color: #4a0007; color: white; }  
+    .btn-timer { background-color: #2b2b2b; color: white; }  
 
-        .btn-next { background-color: #e60039; color: white; }
-        .btn-sec { background-color: #4a0007; color: white; }
-        .btn-timer { background-color: #2b2b2b; color: white; }
+    .falling-heart {  
+        position: absolute;  
+        top: -20px;  
+        color: #ff4d6d;  
+        pointer-events: none;  
+        animation: fall linear forwards;  
+        z-index: 1;  
+    }  
 
-        .falling-heart {
-            position: absolute;
-            top: -20px;
-            color: #ff4d6d;
-            pointer-events: none;
-            animation: fall linear forwards;
-            z-index: 1;
-        }
+    @keyframes fall {  
+        to { transform: translateY(105vh) rotate(360deg); }  
+    }  
+</style>
 
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
-        }
-    </style>
-</head>
-<body>
+</head>  
+<body>  <!-- Vos vidéos en plein écran -->  
+<video autoplay muted loop playsinline class="video-blur-background">  
+    <source src="appel.mp4" type="video/mp4">  
+</video>  
+<video autoplay muted loop playsinline class="video-background">  
+    <source src="appel.mp4" type="video/mp4">  
+</video>  
 
-    <!-- Vos vidéos en plein écran -->
-    <video autoplay muted loop playsinline class="video-blur-background">
-        <source src="appel.mp4" type="video/mp4">
-    </video>
-    <video autoplay muted loop playsinline class="video-background">
-        <source src="appel.mp4" type="video/mp4">
-    </video>
+<div class="overlay"></div>  
 
-    <div class="overlay"></div>
+<!-- PAGE 1 : L'Accueil avec le Chrono -->  
+<div class="container active" id="page1">  
+    <div style="font-size: 2.5rem;">❤️</div>  
+    <h1>Même à distance, avec toi.</h1>  
+    <p>Je suis tellement fière de toi et de ton courage pour cette thèse. Regarde derrière cette boîte, je suis toujours à tes côtés.</p>  
+      
+    <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">  
+        <p style="font-weight: bold; margin: 0;">⏱️ Chrono Thèse (25 min de focus)</p>  
+        <div class="timer-display" id="timer">25:00</div>  
+    </div>  
 
-    <!-- PAGE 1 : L'Accueil avec le Chrono -->
-    <div class="container active" id="page1">
-        <div style="font-size: 2.5rem;">❤️</div>
-        <h1>Même à distance, avec toi.</h1>
-        <p>Je suis tellement fière de toi et de ton courage pour cette thèse. Regarde derrière cette boîte, je suis toujours à tes côtés.</p>
-        
-        <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
-            <p style="font-weight: bold; margin: 0;">⏱️ Chrono Thèse (25 min de focus)</p>
-            <div class="timer-display" id="timer">25:00</div>
-        </div>
+    <div class="btn-group">  
+        <button class="btn-timer" id="timerBtn">▶ Lancer le chrono</button>  
+        <button class="btn-sec" id="musicBtn">🎵 Musique</button>  
+        <button class="btn-next" onclick="changePage('page2')">Suivant ➔</button>  
+    </div>  
+</div>  
 
-        <div class="btn-group">
-            <button class="btn-timer" id="timerBtn">▶ Lancer le chrono</button>
-            <button class="btn-sec" id="musicBtn">🎵 Musique</button>
-            <button class="btn-next" onclick="changePage('page2')">Suivant ➔</button>
-        </div>
-    </div>
+<!-- PAGE 2 : Le premier mot doux -->  
+<div class="container" id="page2">  
+    <div style="font-size: 2.5rem;">🌹</div>  
+    <h1>Pour les moments de doute...</h1>  
+    <p>Quand la rédaction devient difficile, rappelle-toi pourquoi tu as commencé.</p>  
+    <div class="love-quote">  
+        "Tu es l'homme le plus intelligent et courageux que je connaisse. Cette thèse ne te résistera pas, mon docteur ! 🎓"  
+    </div>  
+    <div class="btn-group">  
+        <button class="btn-sec" onclick="changePage('page1')">↩ Retour</button>  
+        <button class="btn-next" onclick="changePage('page3')">Suivant ➔</button>  
+    </div>  
+</div>  
 
-    <!-- PAGE 2 : Le premier mot doux -->
-    <div class="container" id="page2">
-        <div style="font-size: 2.5rem;">🌹</div>
-        <h1>Pour les moments de doute...</h1>
-        <p>Quand la rédaction devient difficile, rappelle-toi pourquoi tu as commencé.</p>
-        <div class="love-quote">
-            "Tu es l'homme le plus intelligent et courageux que je connaisse. Cette thèse ne te résistera pas, mon Maître ! 🎓"
-        </div>
-        <div class="btn-group">
-            <button class="btn-sec" onclick="changePage('page1')">↩ Retour</button>
-            <button class="btn-next" onclick="changePage('page3')">Suivant ➔</button>
-        </div>
-    </div>
+<!-- PAGE 3 : Le deuxième mot doux -->  
+<div class="container" id="page3">  
+    <div style="font-size: 2.5rem;">💋</div>  
+    <h1>Un grand bisou virtuel</h1>  
+    <p>Ferme les yeux quelques secondes, prends une grande inspiration.</p>  
+    <div class="love-quote">  
+        "Chaque ligne que tu écris aujourd'hui nous rapproche de nos retrouvailles. Je t'aime plus que tout au monde. 💪❤️"  
+    </div>  
+    <div class="btn-group">  
+        <button class="btn-sec" onclick="changePage('page2')">↩ Retour</button>  
+        <button class="btn-next" onclick="changePage('page1')">Revenir au Chrono ↩</button>  
+    </div>  
+</div>  
 
-    <!-- PAGE 3 : Le deuxième mot doux -->
-    <div class="container" id="page3">
-        <div style="font-size: 2.5rem;">💋</div>
-        <h1>Un grand bisou virtuel</h1>
-        <p>Ferme les yeux quelques secondes, prends une grande inspiration.</p>
-        <div class="love-quote">
-            "Chaque ligne que tu écris aujourd'hui nous rapproche de nos retrouvailles. Je t'aime plus que tout au monde. 💪❤️"
-        </div>
-        <div class="btn-group">
-            <button class="btn-sec" onclick="changePage('page2')">↩ Retour</button>
-            <button class="btn-next" onclick="changePage('page1')">Revenir au Chrono ↩</button>
-        </div>
-    </div>
+<!-- Ajout de preload="auto" pour forcer le chargement de la musique en ligne -->
+<audio id="bgMusic" loop preload="auto">  
+    <source src="musique.mp3" type="audio/mpeg">  
+</audio>  
 
-    <audio id="bgMusic" loop>
-        <source src="musique.mp3" type="audio/mpeg">
-    </audio>
+<script>  
+    function changePage(pageId) {  
+        document.querySelectorAll('.container').forEach(container => {  
+            container.classList.remove('active');  
+        });  
+        document.getElementById(pageId).classList.add('active');  
+    }  
 
-    <script>
-        function changePage(pageId) {
-            document.querySelectorAll('.container').forEach(container => {
-                container.classList.remove('active');
+    const music = document.getElementById('bgMusic');  
+    const musicBtn = document.getElementById('musicBtn');  
+
+    // Force le navigateur à préparer le fichier audio dès le départ
+    window.addEventListener('DOMContentLoaded', () => {
+        music.load();
+    });
+
+    musicBtn.addEventListener('click', () => {  
+        if (music.paused) {  
+            // Utilisation d'une Promesse pour éviter les bugs de lecture sur serveur
+            music.play().then(() => {
+                musicBtn.innerText = "⏸ Couper";  
+            }).catch(error => {
+                console.log("Erreur de lecture : ", error);
+                alert("Cliquez à nouveau pour lancer la musique !");
             });
-            document.getElementById(pageId).classList.add('active');
-        }
+        } else {  
+            music.pause();  
+            musicBtn.innerText = "🎵 Musique";  
+        }  
+    });  
 
-        const music = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicBtn');
+    let timeLeft = 25 * 60;  
+    let timerId = null;  
+    const timerDisplay = document.getElementById('timer');  
+    const timerBtn = document.getElementById('timerBtn');  
 
-        musicBtn.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                musicBtn.innerText = "⏸ Couper";
-            } else {
-                music.pause();
-                musicBtn.innerText = "🎵 Musique";
-            }
-        });
+    function updateTimerDisplay() {  
+        const minutes = Math.floor(timeLeft / 60);  
+        const seconds = timeLeft % 60;  
+        timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;  
+    }  
 
-        let timeLeft = 25 * 60;
-        let timerId = null;
-        const timerDisplay = document.getElementById('timer');
-        const timerBtn = document.getElementById('timerBtn');
+    timerBtn.addEventListener('click', () => {  
+        if (timerId === null) {  
+            timerId = setInterval(() => {  
+                if (timeLeft > 0) {  
+                    timeLeft--;  
+                    updateTimerDisplay();  
+                } else {  
+                    clearInterval(timerId);  
+                    timerId = null;  
+                    timeLeft = 25 * 60;  
+                    updateTimerDisplay();  
+                    timerBtn.innerText = "▶ Lancer";  
+                    alert("🎉 C'est l'heure de la pause mon amour ! Viens lire les pages suivantes ! 💋");  
+                }  
+            }, 1000);  
+            timerBtn.innerText = "⏸ Pause";  
+        } else {  
+            clearInterval(timerId);  
+            timerId = null;  
+            timerBtn.innerText = "▶ Reprendre";  
+        }  
+    });  
 
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
+    function createHeart() {  
+        const heart = document.createElement('div');  
+        heart.classList.add('falling-heart');  
+        heart.innerHTML = '❤️';  
+        heart.style.left = Math.random() * 100 + 'vw';  
+        heart.style.animationDuration = Math.random() * 3 + 2 + 's';  
+        heart.style.opacity = Math.random() * 0.7 + 0.3;  
+        heart.style.fontSize = Math.random() * 20 + 15 + 'px';  
+          
+        document.body.appendChild(heart);  
+          
+        setTimeout(() => { heart.remove(); }, 5000);  
+    }  
+    setInterval(createHeart, 400);  
+</script>
 
-        timerBtn.addEventListener('click', () => {
-            if (timerId === null) {
-                timerId = setInterval(() => {
-                    if (timeLeft > 0) {
-                        timeLeft--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerId);
-                        timerId = null;
-                        timeLeft = 25 * 60;
-                        updateTimerDisplay();
-                        timerBtn.innerText = "▶ Lancer";
-                        alert("🎉 C'est l'heure de la pause mon amour ! Viens lire les pages suivantes ! 💋");
-                    }
-                }, 1000);
-                timerBtn.innerText = "⏸ Pause";
-            } else {
-                clearInterval(timerId);
-                timerId = null;
-                timerBtn.innerText = "▶ Reprendre";
-            }
-        });
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('falling-heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.opacity = Math.random() * 0.7 + 0.3;
-            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-            
-            document.body.appendChild(heart);
-            
-            setTimeout(() => { heart.remove(); }, 5000);
-        }
-        setInterval(createHeart, 400);
-    </script>
-</body>
+</body>  
 </html>
